@@ -1,0 +1,5 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/emirhurturk/Dev/Projects/OpenGL/Easy2DSandbox
+-- /usr/local/lib/libEasy2D.1.0.dylib
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/emirhurturk/Dev/Projects/OpenGL/Easy2DSandbox/build

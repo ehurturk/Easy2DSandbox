@@ -1,0 +1,9 @@
+BasedOnStyle: Google
+IndentWidth: 4
+SortIncludes: false
+ColumnLimit: 0
+BreakBeforeBraces: Attach
+AccessModifierOffset: -4
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignEscapedNewlines: Left
