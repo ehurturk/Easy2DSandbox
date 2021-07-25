@@ -1,3 +1,0 @@
-/Users/emirhurturk/Dev/Projects/OpenGL/Easy2DSandbox/build/CMakeFiles/rebuild_cache.dir
-/Users/emirhurturk/Dev/Projects/OpenGL/Easy2DSandbox/build/CMakeFiles/edit_cache.dir
-/Users/emirhurturk/Dev/Projects/OpenGL/Easy2DSandbox/build/CMakeFiles/Easy2DSandbox.dir
