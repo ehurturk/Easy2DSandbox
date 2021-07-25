@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/emirhurturk/Dev/Projects/OpenGL/Easy2DSandbox/build",
-  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  -I/usr/local/include -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -std=gnu++17 -o CMakeFiles/Easy2DSandbox.dir/main.cpp.o -c /Users/emirhurturk/Dev/Projects/OpenGL/Easy2DSandbox/main.cpp",
-  "file": "/Users/emirhurturk/Dev/Projects/OpenGL/Easy2DSandbox/main.cpp"
-}
-]
