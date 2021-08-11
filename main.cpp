@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "Easy2D/scene.h"
 #include "Easy2D/sprite.h"
 #include "Easy2D/stl/vector.h"
 
@@ -39,7 +40,8 @@ void init() {
     ezAddToScene(scene, (void *)cam, EZ_CAMERA);
 
     /* Create a sprite with default shader which implements proj and model matrices by default */
-    sprite = ezSquareSprite("def_sprite", 400, 300, 0, 100, 100); /* pos x, pos y, width, height */
+    sprite            = ezSquareSprite("def_sprite", 400, 300, 0, 100, 100); /* pos x, pos y, width, height */
+    EZSprite *sprite2 = ezSquareSprite("def_sprite2", 100, 200, 0, 50, 50);
 
     /* Create shaders & texture - and bind them to the sprite */
     EZShader *shader = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
@@ -50,6 +52,7 @@ void init() {
     ezSetSpriteTexture(sprite, tex1);
 
     ezAddToScene(scene, (void *)sprite, EZ_GAMEOBJS);
+    ezAddToScene(scene, (void *)sprite2, EZ_GAMEOBJS);
 }
 
 void update() {
