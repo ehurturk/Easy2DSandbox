@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "Easy2D/input.h"
 #include "Easy2D/sprite.h"
+#include "Easy2D/stl/vector.h"
 
 #define EZ_DEBUG_ENABLED
 #include <Easy2D/easy2d.h>
@@ -39,17 +39,17 @@ void init() {
     ezAddToScene(scene, (void *)cam, EZ_CAMERA);
 
     /* Create a sprite with default shader which implements proj and model matrices by default */
-    sprite = ezSquareSprite(400, 300, 0, 100, 100); /* pos x, pos y, width, height */
+    sprite = ezSquareSprite("def_sprite", 400, 300, 0, 100, 100); /* pos x, pos y, width, height */
 
     /* Create shaders & texture - and bind them to the sprite */
     EZShader *shader = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
                                               (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
     ezSetSpriteShader(sprite, shader);
 
-    EZTexture *tex1 = ezLoadTexture("../res/barack.jpeg");
+    EZTexture *tex1 = ezLoadTexture("../res/tank.png");
     ezSetSpriteTexture(sprite, tex1);
 
-    ezAddToScene(scene, (void *)sprite, EZ_GAMEOBJECT);
+    ezAddToScene(scene, (void *)sprite, EZ_GAMEOBJS);
 }
 
 void update() {
@@ -84,37 +84,26 @@ void pollInput() {
         ezRotateSprite(sprite, 10);
     }
 
-    const float speed = 10.0f;
+    const float speed = 2.0f;
     if (glfwGetKey(ezGetNativeWindow(app->window), EZ_KEY_W) == GLFW_PRESS) {
-        vec3 t;
-        t[0] = 0.0f;
-        t[1] = -5.0f * speed;
-        t[2] = 0.0f;
-        ezTranslateSprite(sprite, t);
+        EZ_VEC3(t, 0.0f, -5.0f * speed, 0.0f);
+
+        ezTranslateSprite(sprite, t, EZ_WORLD_REF);
     }
 
     if (glfwGetKey(ezGetNativeWindow(app->window), EZ_KEY_A) == GLFW_PRESS) {
-        vec3 t;
-        t[0] = -5.0f * speed;
-        t[1] = 0.0f;
-        t[2] = 0.0f;
-        ezTranslateSprite(sprite, t);
+        EZ_VEC3(t, -5.0f * speed, 0.0f, 0.0f);
+        ezTranslateSprite(sprite, t, EZ_WORLD_REF);
     }
 
     if (glfwGetKey(ezGetNativeWindow(app->window), EZ_KEY_S) == GLFW_PRESS) {
-        vec3 t;
-        t[0] = 0.0f;
-        t[1] = 5.0f * speed;
-        t[2] = 0.0f;
-        ezTranslateSprite(sprite, t);
+        EZ_VEC3(t, 0.0f, 5.0f * speed, 0.0f);
+        ezTranslateSprite(sprite, t, EZ_WORLD_REF);
     }
 
     if (glfwGetKey(ezGetNativeWindow(app->window), EZ_KEY_D) == GLFW_PRESS) {
-        vec3 t;
-        t[0] = 5.0f * speed;
-        t[1] = 0.0f;
-        t[2] = 0.0f;
-        ezTranslateSprite(sprite, t);
+        EZ_VEC3(t, 5.0f * speed, 0.0f, 0.0f);
+        ezTranslateSprite(sprite, t, EZ_WORLD_REF);
     }
 }
 
@@ -123,10 +112,18 @@ void keyInput(int key, int action) {
         ezCloseWindow(app->window);
     }
 
-    if (key == EZ_KEY_C && action == EZ_KEY_CLICK) {
+    if (key == EZ_KEY_E && action == EZ_KEY_CLICK) {
         vec3 xyz;
         xyz[0] = 1.5f;
         xyz[1] = 1.0f;
+        xyz[2] = 1.0f;
+        ezScaleSprite(sprite, xyz);
+    }
+
+    if (key == EZ_KEY_Q && action == EZ_KEY_CLICK) {
+        vec3 xyz;
+        xyz[0] = 1.0f;
+        xyz[1] = 1.5f;
         xyz[2] = 1.0f;
         ezScaleSprite(sprite, xyz);
     }
