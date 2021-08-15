@@ -54,6 +54,7 @@ void init() {
     EZTexture *tex1 = ezLoadTexture("../res/tank.png");
     ezSetSpriteTexture(sprite, tex1);
 
+    ezSpriteAddScript(sprite2, "script2.c", "script2");
     ezSpriteAddScript(sprite, "script1.c", "script1");
 
     ezAddToScene(scene, (void *)sprite, EZ_GAMEOBJS);
