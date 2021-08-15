@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include "Easy2D/aabb.h"
+#include "Easy2D/input.h"
 #include "Easy2D/scene.h"
 #include "Easy2D/sprite.h"
 #include "Easy2D/stl/vector.h"
@@ -17,6 +19,7 @@ void keyInput(int key, int action);
 EZApplication *app;
 EZScene *scene;
 EZSprite *sprite;
+EZSprite *sprite2;
 
 int main() {
     app = ezCreateApplication();
@@ -33,15 +36,15 @@ int main() {
 
 void init() {
     ezBindKeyInputFunc(keyInput);
-    ezToggleVSync(1);
+    // ezToggleVSync(1);
     app->window   = ezCreateWindow("Easy2D Sandbox", 800, 600, 0);
     scene         = ezCreateScene();
     EZCamera *cam = ezCreateCamera(EZ_ORTHOGRAPHIC);
     ezAddToScene(scene, (void *)cam, EZ_CAMERA);
 
     /* Create a sprite with default shader which implements proj and model matrices by default */
-    sprite            = ezSquareSprite("def_sprite", 400, 300, 0, 100, 100); /* pos x, pos y, width, height */
-    EZSprite *sprite2 = ezSquareSprite("def_sprite2", 100, 200, 0, 50, 50);
+    sprite  = ezSquareSprite("def_sprite", 400, 300, 0, 100, 100); /* pos x, pos y, width, height */
+    sprite2 = ezSquareSprite("def_sprite2", 100, 200, 0, 50, 50);
 
     /* Create shaders & texture - and bind them to the sprite */
     EZShader *shader = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
@@ -51,22 +54,42 @@ void init() {
     EZTexture *tex1 = ezLoadTexture("../res/tank.png");
     ezSetSpriteTexture(sprite, tex1);
 
+    ezSpriteAddScript(sprite, "script1.c", "script1");
+
     ezAddToScene(scene, (void *)sprite, EZ_GAMEOBJS);
     ezAddToScene(scene, (void *)sprite2, EZ_GAMEOBJS);
+
+    ezStartScene(scene);
 }
 
 void update() {
     while (!ezIsWindowOpen(app->window)) {
         pollInput();
-        ezSetBackgroundColor(0.0f, 0.0f, 0.0f, 1.0f);
+        ezSetBackgroundColor(0.3f, 0.1f, 0.4f, 1.0f);
         ezClearFrame();
-
+        /* first update then render */
+        ezUpdateScene(scene);
         /* FPS */
         float fps = ezGetFPS();
         std::string title;
         title = std::to_string(fps).substr(0, std::to_string(fps).find(".") + 3);
         title = "FPS: " + title;
-        std::cout << "Pos: (" << ezGetSpriteTransform(sprite)->position[0] << ", " << ezGetSpriteTransform(sprite)->position[1] << "), Scale: (" << ezGetSpriteTransform(sprite)->scale[0] << ", " << ezGetSpriteTransform(sprite)->scale[1] << "), Rot: (" << ezGetSpriteTransform(sprite)->rotation[2] << ")" << std::endl;
+
+        /* To test position, rotation, and scale */
+        // std::cout << "[" << ezGetSpriteName(sprite) << "] -  Pos: (" << ezGetSpriteTransform(sprite)->position[0] << ", " << ezGetSpriteTransform(sprite)->position[1] << "), Scale: (" << ezGetSpriteTransform(sprite)->scale[0] << ", " << ezGetSpriteTransform(sprite)->scale[1] << "), Rot: (" << ezGetSpriteTransform(sprite)->rotation[2] << ")" << std::endl;
+        // std::cout << "[" << ezGetSpriteName(sprite2) << "] -  Pos: (" << ezGetSpriteTransform(sprite2)->position[0] << ", " << ezGetSpriteTransform(sprite2)->position[1] << "), Scale: (" << ezGetSpriteTransform(sprite2)->scale[0] << ", " << ezGetSpriteTransform(sprite2)->scale[1] << "), Rot: (" << ezGetSpriteTransform(sprite2)->rotation[2] << ")" << std::endl;
+
+        /* To test collision */
+        /*
+        if (ezCheckSpriteCollision(sprite, sprite2)) {
+            std::cout << "COLLISION!!" << std::endl;
+        } else {
+            std::cout << "NO COLLISION!!" << std::endl;
+        }
+    */
+
+        /* To test global sprite finding */
+        // std::cout << ezGetSpriteName((struct EZSprite *)ezFindSpriteWithName(scene, "def_sprite2")) << std::endl;
         ezSetWindowTitle(app->window, title.c_str());
         ezRenderScene(scene);
         ezUpdateWindow(app->window);
@@ -131,10 +154,12 @@ void keyInput(int key, int action) {
         ezScaleSprite(sprite, xyz);
     }
 
+    if (key == EZ_KEY_G && action == EZ_KEY_CLICK) {
+        struct EZSprite *sprite = ezSquareSprite("aa", 100, 200, 0, 30, 30);
+        ezInstantiateSprite(scene, (const void *)sprite, 400, 300);
+    }
+
     if (key == EZ_KEY_O && action == EZ_KEY_CLICK) {
         ezSetSpritePosition(sprite, 400, 300);
-        /* TODO
-        ezSetSpriteRotation(sprite, 0);
-        */
     }
 }
