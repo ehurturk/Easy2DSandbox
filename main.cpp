@@ -65,6 +65,7 @@ void init() {
     EZ_INITIALIZE_SCRIPT(script2);
     EZ_INITIALIZE_SCRIPT(script3);
 
+    /* The script parameters must have the same name as the macro parameters above */
     ezSpriteAddScript(sprite, script1);
     ezSpriteAddScript(sprite3, script3);
     ezSpriteAddScript(gameobj, gameobject);
