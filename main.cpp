@@ -4,10 +4,10 @@
 #define EZ_DEBUG_ENABLED
 #include <Easy2D/easy2d.h>
 
-#include "gameobject.h"
-#include "script1.h"
-#include "script2.h"
-#include "script3.h"
+#include "scripts/gameobject.h"
+#include "scripts/script1.h"
+#include "scripts/script2.h"
+#include "scripts/script3.h"
 
 void init();
 void update();
