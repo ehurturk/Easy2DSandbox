@@ -4,7 +4,7 @@
 #include "Easy2D/sprite.h"
 
 static void start(struct EZSprite *parent) {
-    // printf("Start sprite: %s\n", ezGetSpriteName(parent));
+    printf("Start sprite: %s\n", ezGetSpriteName(parent));
 }
 
 static void update(struct EZSprite *parent) {

@@ -11,7 +11,7 @@ static void start(struct EZSprite *parent) {
 }
 
 static void update(struct EZSprite *parent) {
-    printf("GAMEOBJECT update??\n");
+    // printf("GAMEOBJECT update??\n");
 }
 
 EZ_INIT_SCRIPT(gameobject);

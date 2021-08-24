@@ -48,7 +48,6 @@ void init() {
     /* Create a sprite with default shader which implements proj and model matrices by default */
     sprite  = ezSquareSprite("def_sprite", 400, 300, 0, 60, 60);          /* pos x, pos y, width, height */
     sprite2 = ezSquareSprite("def_sprite2", 100, 200, 0, 60, 60);         /* create a normal square sprite that is renderable */
-    sprite3 = ezEmptySprite(EZ_SQUARE, "sprite3", 300, 300, 0);           /* create an "invisible" square sprite */
     gameobj = ezEmptySprite(EZ_EMPTY_GAMEOBJ, "gameobject", 200, 200, 0); /* create an empty gameobject with no purpose - just like html divs */
 
     /* Create shaders & texture - and bind them to the sprite */
@@ -63,16 +62,14 @@ void init() {
     EZ_INITIALIZE_SCRIPT(gameobject);
     EZ_INITIALIZE_SCRIPT(script1);
     EZ_INITIALIZE_SCRIPT(script2);
-    EZ_INITIALIZE_SCRIPT(script3);
 
     /* The script parameters must have the same name as the macro parameters above */
     ezSpriteAddScript(sprite, script1);
-    ezSpriteAddScript(sprite3, script3);
     ezSpriteAddScript(gameobj, gameobject);
+    ezSpriteAddScript(sprite2, script2);
 
     ezAddToScene((void *)sprite, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
-    ezAddToScene((void *)sprite3, EZ_GAMEOBJS);
     ezAddToScene((void *)gameobj, EZ_GAMEOBJS);
 
     ezStartScene();
