@@ -8,6 +8,9 @@ uniform sampler2D tex;
 
 void main() 
 {
-	color = texture(tex, o_uv);
+	vec4 t_color = texture(tex, o_uv);
+	if (t_color.a < 0.1)
+		discard;
+	color = t_color;
 	// color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }

@@ -5,16 +5,17 @@
 #include "Easy2D/input.h"
 #include "Easy2D/scene.h"
 #include "Easy2D/sprite.h"
+#include "Easy2D/window.h"
 
-float speed = 0.5f;
+static float speed = 0.5f;
 
-void pollInput(struct EZSprite *sprite) {
-    if (ezIsKeyDown(GLFW_KEY_LEFT)) {
-        ezRotateSprite(sprite, -10);
+static void pollInput(struct EZSprite *sprite) {
+    if (ezIsKeyDown(EZ_KEY_A)) {
+        ezRotateSprite(sprite, -4);
     }
 
-    if (ezIsKeyDown(GLFW_KEY_RIGHT)) {
-        ezRotateSprite(sprite, 10);
+    if (ezIsKeyDown(EZ_KEY_D)) {
+        ezRotateSprite(sprite, 4);
     }
 
     if (ezIsKeyDown(EZ_KEY_W)) {
@@ -22,18 +23,8 @@ void pollInput(struct EZSprite *sprite) {
         ezTranslateSprite(sprite, t, EZ_LOCAL_REF);
     }
 
-    if (ezIsKeyDown(EZ_KEY_A)) {
-        EZ_VEC3(t, -5.0f * speed, 0.0f, 0.0f);
-        ezTranslateSprite(sprite, t, EZ_LOCAL_REF);
-    }
-
     if (ezIsKeyDown(EZ_KEY_S)) {
         EZ_VEC3(t, 0.0f, 5.0f * speed, 0.0f);
-        ezTranslateSprite(sprite, t, EZ_LOCAL_REF);
-    }
-
-    if (ezIsKeyDown(EZ_KEY_D)) {
-        EZ_VEC3(t, 5.0f * speed, 0.0f, 0.0f);
         ezTranslateSprite(sprite, t, EZ_LOCAL_REF);
     }
 
@@ -48,13 +39,9 @@ static void start(struct EZSprite *parent) {
     printf("Start sprite: %s\n", ezGetSpriteName(parent));
 }
 
-void onCollision() {
-}
-
 static void update(struct EZSprite *parent) {
     pollInput(parent);
     EZSprite *bullet = (EZSprite *)ezFindSpriteWithName("bullet");
-    printf("Rot: %f\n", ezGetSpriteTransform(parent)->rotation[2]);
 }
 
 EZ_INIT_SCRIPT(script1);

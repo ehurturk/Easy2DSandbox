@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "Easy2D/sprite.h"
 
 #define EZ_DEBUG_ENABLED
 #include <Easy2D/easy2d.h>
@@ -16,11 +17,6 @@ void destroy();
 void keyInput(int key, int action);
 
 EZApplication *app;
-
-EZSprite *sprite;
-EZSprite *sprite2;
-EZSprite *sprite3;
-EZSprite *gameobj;
 
 int main() {
     app = ezCreateApplication();
@@ -46,17 +42,25 @@ void init() {
     ezAddToScene((void *)cam, EZ_CAMERA);
 
     /* Create a sprite with default shader which implements proj and model matrices by default */
-    sprite  = ezSquareSprite("def_sprite", 400, 300, 0, 60, 60);          /* pos x, pos y, width, height */
-    sprite2 = ezSquareSprite("def_sprite2", 100, 200, 0, 60, 60);         /* create a normal square sprite that is renderable */
-    gameobj = ezEmptySprite(EZ_EMPTY_GAMEOBJ, "gameobject", 200, 200, 0); /* create an empty gameobject with no purpose - just like html divs */
+    EZSprite *sprite  = ezSquareSprite("def_sprite", 400, 300, 0, 60, 60);          /* pos x, pos y, width, height */
+    EZSprite *sprite2 = ezSquareSprite("tank2", 100, 200, 0, 60, 60);               /* create a normal square sprite that is renderable */
+    EZSprite *sprite3 = ezSquareSprite("tank3", 300, 200, 0, 60, 60);               /* create a normal square sprite that is renderable */
+    EZSprite *gameobj = ezEmptySprite(EZ_EMPTY_GAMEOBJ, "gameobject", 200, 200, 0); /* create an empty gameobject with no purpose - just like html divs */
 
     /* Create shaders & texture - and bind them to the sprite */
     EZShader *shader = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
                                               (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
     ezSetSpriteShader(sprite, shader);
 
+    EZShader *shader2 = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
+                                               (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
+    ezSetSpriteShader(sprite2, shader2);
+
     EZTexture *tex1 = ezLoadTexture("../res/tank.png");
     ezSetSpriteTexture(sprite, tex1);
+
+    EZTexture *tex2 = ezLoadTexture("../res/tank.png");
+    ezSetSpriteTexture(sprite2, tex2);
 
     /* Initialize the scripts and then add them to their parent sprites */
     EZ_INITIALIZE_SCRIPT(gameobject);
@@ -71,6 +75,7 @@ void init() {
     ezAddToScene((void *)sprite, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
     ezAddToScene((void *)gameobj, EZ_GAMEOBJS);
+    ezAddToScene((void *)sprite3, EZ_GAMEOBJS);
 
     ezStartScene();
 }
@@ -87,9 +92,6 @@ void update() {
         float fps         = ezGetFPS();
         std::string title = "FPS: " + std::to_string(fps).substr(0, std::to_string(fps).find(".") + 3);
 
-        if (ezCheckSpriteCollision(sprite, sprite2)) {
-            std::cout << "collision" << std::endl;
-        }
         ezSetWindowTitle(app->window, title.c_str());
         ezRenderScene();
         ezUpdateWindow(app->window);
