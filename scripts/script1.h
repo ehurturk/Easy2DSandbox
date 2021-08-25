@@ -7,6 +7,9 @@ extern EZScript *script1;
 
 static void start(struct EZSprite *parent);
 static void update(struct EZSprite *parent);
+static void destroy(struct EZSprite *parent);
+
+void assign_bullet_prefab(struct EZSprite *bullet);
 
 void initscript1();
 

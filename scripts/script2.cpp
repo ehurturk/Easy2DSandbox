@@ -6,6 +6,8 @@
 #include "Easy2D/scene.h"
 #include "Easy2D/sprite.h"
 
+#include "script2.h"
+
 static float speed = 0.5f;
 
 static void pollInput(struct EZSprite *sprite) {
@@ -41,6 +43,10 @@ static void start(struct EZSprite *parent) {
 static void update(struct EZSprite *parent) {
     pollInput(parent);
     EZSprite *bullet = (EZSprite *)ezFindSpriteWithName("bullet");
+}
+
+static void destroy(struct EZSprite *parent) {
+    free(script2);
 }
 
 EZ_INIT_SCRIPT(script2);

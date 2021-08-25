@@ -9,6 +9,7 @@
 #include "scripts/script1.h"
 #include "scripts/script2.h"
 #include "scripts/script3.h"
+#include "scripts/bullet.h"
 
 void init();
 void update();
@@ -42,10 +43,11 @@ void init() {
     ezAddToScene((void *)cam, EZ_CAMERA);
 
     /* Create a sprite with default shader which implements proj and model matrices by default */
-    EZSprite *sprite  = ezSquareSprite("def_sprite", 400, 300, 0, 60, 60);          /* pos x, pos y, width, height */
-    EZSprite *sprite2 = ezSquareSprite("tank2", 100, 200, 0, 60, 60);               /* create a normal square sprite that is renderable */
-    EZSprite *sprite3 = ezSquareSprite("tank3", 300, 200, 0, 60, 60);               /* create a normal square sprite that is renderable */
-    EZSprite *gameobj = ezEmptySprite(EZ_EMPTY_GAMEOBJ, "gameobject", 200, 200, 0); /* create an empty gameobject with no purpose - just like html divs */
+    EZSprite *sprite    = ezSquareSprite("def_sprite", 400, 300, 0, 60, 60);          /* pos x, pos y, width, height */
+    EZSprite *sprite2   = ezSquareSprite("tank2", 100, 200, 0, 60, 60);               /* create a normal square sprite that is renderable */
+    EZSprite *sprite3   = ezSquareSprite("tank3", 300, 200, 0, 60, 60);               /* create a normal square sprite that is renderable */
+    EZSprite *gameobj   = ezEmptySprite(EZ_EMPTY_GAMEOBJ, "gameobject", 200, 200, 0); /* create an empty gameobject with no purpose - just like html divs */
+    EZSprite *newsprite = ezSquareSprite("newsprite", 250, 250, 0, 40, 40);
 
     /* Create shaders & texture - and bind them to the sprite */
     EZShader *shader = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
@@ -66,11 +68,15 @@ void init() {
     EZ_INITIALIZE_SCRIPT(gameobject);
     EZ_INITIALIZE_SCRIPT(script1);
     EZ_INITIALIZE_SCRIPT(script2);
+    EZ_INITIALIZE_SCRIPT(newscript);
 
     /* The script parameters must have the same name as the macro parameters above */
     ezSpriteAddScript(sprite, script1);
     ezSpriteAddScript(gameobj, gameobject);
     ezSpriteAddScript(sprite2, script2);
+    ezSpriteAddScript(newsprite, newscript); /* but don't add to the scene since its a prefab - will be instantiated later. */
+
+    assign_bullet_prefab(newsprite);
 
     ezAddToScene((void *)sprite, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
@@ -101,11 +107,6 @@ void update() {
 void destroy() {
     ezFreeApp(app); /* deallocate the app */
     ezDestroyScene();
-    /* Free all scripts */
-    free(script1);
-    free(script2);
-    free(script3);
-    free(gameobject);
 }
 
 void keyInput(int key, int action) {

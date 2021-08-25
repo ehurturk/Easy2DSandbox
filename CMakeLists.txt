@@ -8,5 +8,5 @@ find_library(Easy2DLIB libEasy2D.1.0.dylib)
 message(STATUS ${EASY2D_LIB})
 
 include_directories(/usr/local/include)
-add_executable(Easy2DSandbox main.cpp scripts/script1.cpp scripts/script1.h scripts/script2.cpp scripts/script2.h scripts/script3.cpp scripts/script3.h scripts/gameobject.cpp scripts/gameobject.h)
+add_executable(Easy2DSandbox main.cpp scripts/script1.cpp scripts/script1.h scripts/script2.cpp scripts/script2.h scripts/script3.cpp scripts/script3.h scripts/gameobject.cpp scripts/gameobject.h scripts/bullet.h scripts/bullet.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${Easy2DLIB} ${GLFWLIB})

@@ -7,6 +7,7 @@ extern EZScript *script2;
 
 static void start(struct EZSprite *parent);
 static void update(struct EZSprite *parent);
+static void destroy(struct EZSprite *parent);
 
 void initscript2();
 

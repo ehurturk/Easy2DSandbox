@@ -7,7 +7,11 @@
 #include "Easy2D/sprite.h"
 #include "Easy2D/window.h"
 
+#include "script1.h"
+
 static float speed = 0.5f;
+struct EZSprite *b;
+int counter = 0;
 
 static void pollInput(struct EZSprite *sprite) {
     if (ezIsKeyDown(EZ_KEY_A)) {
@@ -33,6 +37,23 @@ static void pollInput(struct EZSprite *sprite) {
     } else {
         speed = 0.5f;
     }
+
+    /* solve single clicks */
+    if (ezIsKeyDown(GLFW_KEY_SPACE)) {
+        /* instantiate bullet */
+        /*
+            Once instantiated, the start and update loop will be called. 
+        */
+        if (b != NULL) {
+            printf("instantiate counter: %i\n", counter);
+            counter++;
+            ezInstantiateSprite((const void *)b, 100, 100);
+        }
+    }
+}
+
+void assign_bullet_prefab(struct EZSprite *bullet) {
+    b = bullet;
 }
 
 static void start(struct EZSprite *parent) {
@@ -42,6 +63,10 @@ static void start(struct EZSprite *parent) {
 static void update(struct EZSprite *parent) {
     pollInput(parent);
     EZSprite *bullet = (EZSprite *)ezFindSpriteWithName("bullet");
+}
+
+static void destroy(struct EZSprite *parent) {
+    free(script1);
 }
 
 EZ_INIT_SCRIPT(script1);

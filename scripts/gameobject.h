@@ -7,6 +7,7 @@ extern EZScript *gameobject;
 
 static void start(struct EZSprite *parent);
 static void update(struct EZSprite *parent);
+static void destroy(struct EZSprite *parent);
 
 void initgameobject();
 
