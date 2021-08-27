@@ -8,12 +8,25 @@
 #include "Easy2D/sprite.h"
 #include "bullet.h"
 
+static const float speed = 10.0f;
+
+static void pollInput(struct EZSprite *sprite) {
+    EZSprite *sprite1 = (EZSprite *)ezFindSpriteWithName("def_sprite");
+    if (sprite1 != NULL) {
+        ezSetSpriteRotation(sprite, ezGetSpriteTransform(sprite1)->rotation[2]);
+    }
+
+    EZ_VEC3(t, 0.0f, -1.5f * speed, 0.0f);
+    ezTranslateSprite(sprite, t, EZ_LOCAL_REF);
+}
+
 static void start(struct EZSprite *parent) {
     std::cout << "Starting sprite: " << ezGetSpriteName(parent) << std::endl;
 }
 
 static void update(struct EZSprite *parent) {
-    // std::cout << "Updating sprite: " << ezGetSpriteName(parent) << std::endl;
+    // std::cout << "Updating sprite: " << ezGetSpriteName(parent) << " (" << ezGetSpriteTransform(parent)->position[0] << ", " << ezGetSpriteTransform(parent)->position[1] << ", " << ezGetSpriteTransform(parent)->rotation[2] << ")" << std::endl;
+    pollInput(parent);
 }
 
 static void destroy(struct EZSprite *parent) {

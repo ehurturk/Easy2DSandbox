@@ -7,6 +7,8 @@
 #include "Easy2D/sprite.h"
 #include "Easy2D/window.h"
 
+#include <iostream>
+
 #include "script1.h"
 
 static float speed = 0.5f;
@@ -45,9 +47,12 @@ static void pollInput(struct EZSprite *sprite) {
             Once instantiated, the start and update loop will be called. 
         */
         if (b != NULL) {
-            printf("instantiate counter: %i\n", counter);
-            counter++;
-            ezInstantiateSprite((const void *)b, 100, 100);
+            if (counter < 1) {
+                printf("instantiate counter: %i\n", counter);
+                counter++;
+                ezInstantiateSprite((const void *)b, ezGetSpriteTransform(sprite)->position[0], ezGetSpriteTransform(sprite)->position[1]);
+                ezSetSpriteCollisionAsTrigger(b);
+            }
         }
     }
 }
@@ -62,7 +67,6 @@ static void start(struct EZSprite *parent) {
 
 static void update(struct EZSprite *parent) {
     pollInput(parent);
-    EZSprite *bullet = (EZSprite *)ezFindSpriteWithName("bullet");
 }
 
 static void destroy(struct EZSprite *parent) {
