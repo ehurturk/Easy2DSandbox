@@ -5,6 +5,9 @@
 
 #include "script3.h"
 
+static void pollInput(int key, int action) {
+}
+
 static void start(struct EZSprite *parent) {
     printf("Start sprite: %s\n", ezGetSpriteName(parent));
     ezSetSpriteCollisionAsTrigger(parent);
@@ -17,4 +20,4 @@ static void destroy(struct EZSprite *parent) {
     free(script3);
 }
 
-EZ_INIT_SCRIPT(script3);
+EZ_INIT_SCRIPT(script3, start, update, destroy, pollInput);

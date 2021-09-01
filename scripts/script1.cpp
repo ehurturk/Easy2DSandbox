@@ -13,18 +13,21 @@
 
 static float speed = 0.5f;
 struct EZSprite *b;
-int counter = 0;
+static struct EZSprite *sprite;
 
-static void pollInput(struct EZSprite *sprite) {
+static void pollInput(int key, int action) {
     if (ezIsKeyDown(EZ_KEY_A)) {
         ezRotateSprite(sprite, -4);
     }
+
+    if (ezIsKeyDown(EZ_KEY_F))
+        ezDestroySprite(sprite);
 
     if (ezIsKeyDown(EZ_KEY_D)) {
         ezRotateSprite(sprite, 4);
     }
 
-    if (ezIsKeyDown(EZ_KEY_W)) {
+    if (key == EZ_KEY_W && action == GLFW_REPEAT) {
         EZ_VEC3(t, 0.0f, -5.0f * speed, 0.0f);
         ezTranslateSprite(sprite, t, EZ_LOCAL_REF);
     }
@@ -41,18 +44,11 @@ static void pollInput(struct EZSprite *sprite) {
     }
 
     /* solve single clicks */
-    if (ezIsKeyDown(GLFW_KEY_SPACE)) {
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         /* instantiate bullet */
-        /*
-            Once instantiated, the start and update loop will be called. 
-        */
         if (b != NULL) {
-            if (counter < 1) {
-                printf("instantiate counter: %i\n", counter);
-                counter++;
-                ezInstantiateSprite((const void *)b, ezGetSpriteTransform(sprite)->position[0], ezGetSpriteTransform(sprite)->position[1]);
-                ezSetSpriteCollisionAsTrigger(b);
-            }
+            ezInstantiateSprite((const void *)b, ezGetSpriteTransform(sprite)->position[0], ezGetSpriteTransform(sprite)->position[1], ezGetSpriteTransform(sprite)->rotation[2]);
+            ezSetSpriteCollisionAsTrigger(b); /* MULTIPLE OLUNCA ABORT VERIYOR */
         }
     }
 }
@@ -63,14 +59,15 @@ void assign_bullet_prefab(struct EZSprite *bullet) {
 
 static void start(struct EZSprite *parent) {
     printf("Start sprite: %s\n", ezGetSpriteName(parent));
+    sprite = parent;
 }
 
 static void update(struct EZSprite *parent) {
-    pollInput(parent);
+    // pollInput(parent);
 }
 
 static void destroy(struct EZSprite *parent) {
     free(script1);
 }
 
-EZ_INIT_SCRIPT(script1);
+EZ_INIT_SCRIPT(script1, start, update, destroy, pollInput);

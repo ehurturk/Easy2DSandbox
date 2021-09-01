@@ -5,7 +5,7 @@
 
 #include "gameobject.h"
 
-void pollinput() {
+static void pollinput(int key, int action) {
 }
 
 static void start(struct EZSprite *parent) {
@@ -20,4 +20,4 @@ static void destroy(struct EZSprite *parent) {
     free(gameobject);
 }
 
-EZ_INIT_SCRIPT(gameobject);
+EZ_INIT_SCRIPT(gameobject, start, update, destroy, pollinput);

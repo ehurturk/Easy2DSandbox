@@ -101,8 +101,8 @@ void update() {
         ezClearFrame();
 
         /* first update then render */
+        // printf("AAAB\n");
         ezUpdateScene();
-
         /* FPS */
         float fps         = ezGetFPS();
         std::string title = "FPS: " + std::to_string(fps).substr(0, std::to_string(fps).find(".") + 3);
@@ -121,10 +121,5 @@ void destroy() {
 void keyInput(int key, int action) {
     if (key == GLFW_KEY_ESCAPE && action == EZ_KEY_CLICK) {
         ezCloseWindow(app->window);
-    }
-
-    if (key == EZ_KEY_G && action == EZ_KEY_CLICK) {
-        struct EZSprite *sprite = ezSquareSprite("aa", 100, 200, 0, 30, 30);
-        ezInstantiateSprite((const void *)sprite, 400, 300);
     }
 }
