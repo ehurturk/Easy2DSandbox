@@ -85,8 +85,6 @@ void init() {
     ezSpriteAddScript(newsprite, newscript); /* but don't add to the scene since its a prefab - will be instantiated later. */
     ezSpriteAddScript(sprite3, script3);     /* but don't add to the scene since its a prefab - will be instantiated later. */
 
-    assign_bullet_prefab(newsprite);
-
     ezAddToScene((void *)sprite, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
     // ezAddToScene((void *)gameobj, EZ_GAMEOBJS);

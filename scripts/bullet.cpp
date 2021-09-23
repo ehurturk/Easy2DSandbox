@@ -19,14 +19,14 @@ static void update(struct EZSprite *parent) {
     ezTranslateSprite(parent, t, EZ_LOCAL_REF);
 
     if (ezGetSpriteTransform(parent)->position[0] < 0.0f) {
-        // ezDestroySprite(parent);
+        ezDestroySprite(parent); /* PROBLEM */
     }
 }
 
 static void destroy(struct EZSprite *parent) {
     printf("PROBLEM HERE - THE PROBLEM IS BIRCOK KERE SPACE A BASTIGIM ICIN BIRCOK KEZ INSTANTIATE EDIYOR SONRA BI TANE FREELEDIGI ICIN ABORT VERIYOR\n");
-    if (newscript != NULL)
-        free(newscript);
+    printf("%p\n", parent);
+    free(newscript); /* ERROR */
 }
 
 /* IMPORTANT MACRO: Defines the init function of this script */
