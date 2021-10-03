@@ -10,7 +10,6 @@ static void pollInput(int key, int action) {
 }
 
 static void start(struct EZSprite *parent) {
-    tank1 = (EZSprite *)ezFindSpriteWithName("def_sprite");
     std::cout << "Starting sprite: " << ezGetSpriteName(parent) << std::endl;
 }
 
@@ -24,9 +23,7 @@ static void update(struct EZSprite *parent) {
 }
 
 static void destroy(struct EZSprite *parent) {
-    printf("PROBLEM HERE - THE PROBLEM IS BIRCOK KERE SPACE A BASTIGIM ICIN BIRCOK KEZ INSTANTIATE EDIYOR SONRA BI TANE FREELEDIGI ICIN ABORT VERIYOR\n");
-    printf("%p\n", parent);
-    free(newscript); /* ERROR */
+    printf("Destroying bullet script.\n");
 }
 
 /* IMPORTANT MACRO: Defines the init function of this script */

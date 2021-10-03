@@ -9,16 +9,19 @@
 #include "Easy2D/window.h"
 
 #include <iostream>
+#include <string>
 
 #include "script1.h"
 #include "bullet.h"
 
 static float speed = 0.5f;
 static struct EZSprite *sprite;
+static int bull_counter = 0;
 
 static struct EZSprite *createBullet() {
     struct EZSprite *spr = ezSquareSprite("newsprite", 250, 250, 0, 40, 40);
-    EZShader *shader     = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
+    bull_counter++;
+    EZShader *shader = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
                                               (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
     ezSetSpriteShader(spr, shader);
 
@@ -41,7 +44,6 @@ static void inputfun(int key, int action) {
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         /* instantiate bullet */
         struct EZSprite *b = createBullet();
-        printf("%p\n", b);
         ezInstantiateSprite((const void *)b, ezGetSpriteTransform(sprite)->position[0], ezGetSpriteTransform(sprite)->position[1], ezGetSpriteTransform(sprite)->rotation[2]);
         ezSetSpriteCollisionAsTrigger(b); /* MULTIPLE OLUNCA ABORT VERIYOR */
     }

@@ -84,7 +84,7 @@ void init() {
     ezSpriteAddScript(sprite2, script2);
     ezSpriteAddScript(newsprite, newscript); /* but don't add to the scene since its a prefab - will be instantiated later. */
     ezSpriteAddScript(sprite3, script3);     /* but don't add to the scene since its a prefab - will be instantiated later. */
-
+    printf("newscript: %p\n", newscript);
     ezAddToScene((void *)sprite, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
     // ezAddToScene((void *)gameobj, EZ_GAMEOBJS);
@@ -114,6 +114,7 @@ void update() {
 void destroy() {
     ezFreeApp(app); /* deallocate the app */
     ezDestroyScene();
+    free(newscript);
 }
 
 void keyInput(int key, int action) {
