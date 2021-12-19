@@ -5,12 +5,6 @@
 #define EZ_DEBUG_ENABLED
 #include <Easy2D/easy2d.h>
 
-#include "scripts/gameobject.h"
-#include "scripts/script1.h"
-#include "scripts/script2.h"
-#include "scripts/script3.h"
-#include "scripts/bullet.h"
-
 void init();
 void update();
 void destroy();
@@ -71,22 +65,8 @@ void init() {
     EZTexture *tex3 = ezLoadTexture("../res/blt.png");
     ezSetSpriteTexture(newsprite, tex3);
 
-    /* Initialize the scripts and then add them to their parent sprites */
-    // EZ_INITIALIZE_SCRIPT(gameobject);
-    EZ_INITIALIZE_SCRIPT(script1);
-    EZ_INITIALIZE_SCRIPT(script2);
-    EZ_INITIALIZE_SCRIPT(script3);
-    EZ_INITIALIZE_SCRIPT(newscript);
-
-    /* The script parameters must have the same name as the macro parameters above */
-    ezSpriteAddScript(sprite, script1);
-    // ezSpriteAddScript(gameobj, gameobject);
-    ezSpriteAddScript(sprite2, script2);
-    ezSpriteAddScript(newsprite, newscript); /* but don't add to the scene since its a prefab - will be instantiated later. */
-    ezSpriteAddScript(sprite3, script3);     /* but don't add to the scene since its a prefab - will be instantiated later. */
-    printf("newscript: %p\n", newscript);
-    ezAddToScene((void *)sprite, EZ_GAMEOBJS);
-    ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
+    // ezAddToScene((void *)sprite, EZ_GAMEOBJS);
+    // ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
     // ezAddToScene((void *)gameobj, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite3, EZ_GAMEOBJS);
 
@@ -101,6 +81,7 @@ void update() {
         /* first update then render */
         // printf("AAAB\n");
         ezUpdateScene();
+
         /* FPS */
         float fps         = ezGetFPS();
         std::string title = "FPS: " + std::to_string(fps).substr(0, std::to_string(fps).find(".") + 3);
@@ -114,7 +95,6 @@ void update() {
 void destroy() {
     ezFreeApp(app); /* deallocate the app */
     ezDestroyScene();
-    free(newscript);
 }
 
 void keyInput(int key, int action) {

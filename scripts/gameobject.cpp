@@ -19,5 +19,3 @@ static void update(struct EZSprite *parent) {
 static void destroy(struct EZSprite *parent) {
     free(gameobject);
 }
-
-EZ_INIT_SCRIPT(gameobject, start, update, destroy, pollinput);

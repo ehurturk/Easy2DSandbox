@@ -1,0 +1,1 @@
+g++ -fPIC -shared -Wall -pedantic -O2 scripts/$1.$2 -o ./build/bin/compiled_libs/lib$1.so -leasy2d

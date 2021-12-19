@@ -53,5 +53,3 @@ static void update(struct EZSprite *parent) {
 static void destroy(struct EZSprite *parent) {
     free(script2);
 }
-
-EZ_INIT_SCRIPT(script2, start, update, destroy, inputfun);

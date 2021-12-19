@@ -28,4 +28,3 @@ static void destroy(struct EZSprite *parent) {
 
 /* IMPORTANT MACRO: Defines the init function of this script */
 /* Note that the macro parameter must be the same as the extern struct you have defined in the corresponding header file. */
-EZ_INIT_SCRIPT(newscript, start, update, destroy, pollInput);
