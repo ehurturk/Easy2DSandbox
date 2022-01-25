@@ -40,58 +40,59 @@ static struct ball *m_instance;
 //     return spr;
 // }
 
-// /* bound function for handling single click input */
-// static void inputfun(int key, int action) {
-//     if (ezIsKeyDown(GLFW_KEY_LEFT_SHIFT)) {
-//         m_instance->speed = 1.0f;
-//     } else {
-//         m_instance->speed = 0.5f;
-//     }
+/* Input function for continous inputs (I just couldn't solve single click problem, looks awkward I know */
+static void pollInput(struct ball *parent) {
+    if (ezIsKeyDown(EZ_KEY_A)) {
+        ezRotateSprite(parent->sprite, -4);
+    }
 
-//     /* solve single clicks */
-//     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
-//         /* instantiate bullet */
-//         struct EZSprite *b = createBullet();
-//         ezInstantiateSprite((const void *)b, ezGetSpriteTransform(m_instance->sprite)->position[0], ezGetSpriteTransform(m_instance->sprite)->position[1], ezGetSpriteTransform(m_instance->sprite)->rotation[2]);
-//         ezSetSpriteCollisionAsTrigger(b); /* MULTIPLE OLUNCA ABORT VERIYOR */
-//     }
-// }
+    if (ezIsKeyDown(EZ_KEY_F))
+        ezDestroySprite(parent->sprite);
 
-// /* Input function for continous inputs (I just couldn't solve single click problem, looks awkward I know */
-// static void pollInput(struct ball *parent) {
-//     if (ezIsKeyDown(EZ_KEY_A)) {
-//         ezRotateSprite(parent->sprite, -4);
-//     }
+    if (ezIsKeyDown(EZ_KEY_D)) {
+        ezRotateSprite(parent->sprite, 4);
+    }
 
-//     if (ezIsKeyDown(EZ_KEY_F))
-//         ezDestroySprite(parent->sprite);
+    if (ezIsKeyDown(EZ_KEY_W)) {
+        EZ_VEC3(t, 0.0f, -5.0f * m_instance->speed, 0.0f);
+        ezTranslateSprite(parent->sprite, t, EZ_LOCAL_REF);
+    }
 
-//     if (ezIsKeyDown(EZ_KEY_D)) {
-//         ezRotateSprite(parent->sprite, 4);
-//     }
+    if (ezIsKeyDown(EZ_KEY_S)) {
+        EZ_VEC3(t, 0.0f, 5.0f * m_instance->speed, 0.0f);
+        ezTranslateSprite(parent->sprite, t, EZ_LOCAL_REF);
+    }
 
-//     if (ezIsKeyDown(EZ_KEY_W)) {
-//         EZ_VEC3(t, 0.0f, -5.0f * m_instance->speed, 0.0f);
-//         ezTranslateSprite(parent->sprite, t, EZ_LOCAL_REF);
-//     }
+    if (ezIsKeyDown(GLFW_KEY_LEFT_SHIFT)) {
+        m_instance->speed = 1.0f;
+    } else {
+        m_instance->speed = 0.5f;
+    }
 
-//     if (ezIsKeyDown(EZ_KEY_S)) {
-//         EZ_VEC3(t, 0.0f, 5.0f * m_instance->speed, 0.0f);
-//         ezTranslateSprite(parent->sprite, t, EZ_LOCAL_REF);
-//     }
-// }
+    /* solve single clicks */
+    // if (ezIsKeyDown(GLFW_KEY_SPACE)) {
+    //     /* instantiate bullet */
+    //     struct EZSprite *b = createBullet();
+    //     ezInstantiateSprite((const void *)b, ezGetSpriteTransform(m_instance->sprite)->position[0], ezGetSpriteTransform(m_instance->sprite)->position[1], ezGetSpriteTransform(m_instance->sprite)->rotation[2]);
+    //     ezSetSpriteCollisionAsTrigger(b); /* MULTIPLE OLUNCA ABORT VERIYOR */
+    // }
+}
 
 void OnReload(void *instance, struct EZSprite *parent) {
     m_instance         = (struct ball *)instance;
     m_instance->sprite = parent;
-    printf("Start YYY: %s\n", ezGetSpriteName(m_instance->sprite));
+    printf("Start: %s\n", ezGetSpriteName(m_instance->sprite));
 }
 
 void OnUpdate() {
-    // pollInput(m_instance);
+    // printf("SAAAEE\n");
+    pollInput(m_instance);
 }
 
-size_t GetInstanceSize() { return sizeof(struct ball); }
+size_t GetInstanceSize() {
+    printf("size: %zu\n", sizeof(struct ball));
+    return sizeof(struct ball);
+}
 
 #ifdef __cplusplus
 }
