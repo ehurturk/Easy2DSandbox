@@ -24,8 +24,6 @@ struct ball {
     struct EZSprite *sprite;
 };
 
-static struct ball *m_instance;
-
 // static struct EZSprite *createBullet() {
 //     struct EZSprite *spr = ezSquareSprite("newsprite", 250, 250, 0, 40, 40);
 //     m_instance->bull_counter++;
@@ -41,32 +39,32 @@ static struct ball *m_instance;
 // }
 
 /* Input function for continous inputs (I just couldn't solve single click problem, looks awkward I know */
-static void pollInput(struct ball *parent) {
+static void pollInput(struct ball *ball) {
     if (ezIsKeyDown(EZ_KEY_A)) {
-        ezRotateSprite(parent->sprite, -4);
+        ezRotateSprite(ball->sprite, -4);
     }
 
     if (ezIsKeyDown(EZ_KEY_F))
-        ezDestroySprite(parent->sprite);
+        ezDestroySprite(ball->sprite);
 
     if (ezIsKeyDown(EZ_KEY_D)) {
-        ezRotateSprite(parent->sprite, 4);
+        ezRotateSprite(ball->sprite, 4);
     }
 
     if (ezIsKeyDown(EZ_KEY_W)) {
-        EZ_VEC3(t, 0.0f, -5.0f * m_instance->speed, 0.0f);
-        ezTranslateSprite(parent->sprite, t, EZ_LOCAL_REF);
+        EZ_VEC3(t, 0.0f, -5.0f * ball->speed, 0.0f);
+        ezTranslateSprite(ball->sprite, t, EZ_LOCAL_REF);
     }
 
     if (ezIsKeyDown(EZ_KEY_S)) {
-        EZ_VEC3(t, 0.0f, 5.0f * m_instance->speed, 0.0f);
-        ezTranslateSprite(parent->sprite, t, EZ_LOCAL_REF);
+        EZ_VEC3(t, 0.0f, 5.0f * ball->speed, 0.0f);
+        ezTranslateSprite(ball->sprite, t, EZ_LOCAL_REF);
     }
 
     if (ezIsKeyDown(GLFW_KEY_LEFT_SHIFT)) {
-        m_instance->speed = 1.0f;
+        ball->speed = 1.0f;
     } else {
-        m_instance->speed = 0.5f;
+        ball->speed = 0.5f;
     }
 
     /* solve single clicks */
@@ -78,15 +76,17 @@ static void pollInput(struct ball *parent) {
     // }
 }
 
-void OnReload(void *instance, struct EZSprite *parent) {
-    m_instance         = (struct ball *)instance;
-    m_instance->sprite = parent;
-    printf("Start: %s\n", ezGetSpriteName(m_instance->sprite));
+void OnReload(struct ball *ball, struct EZSprite *sprite) {
+    ball->sprite       = sprite;
+    ball->speed        = 0.5f;
+    ball->bull_counter = 0;
+    printf("Start: %s\n", ezGetSpriteName(sprite));
 }
 
-void OnUpdate() {
-    // printf("SAAAEE\n");
-    pollInput(m_instance);
+void OnUpdate(struct ball *ball) {
+    printf("eyy\n");
+    printf("Update: %s\n", ezGetSpriteName((ball)->sprite));
+    pollInput((struct ball *)ball);
 }
 
 size_t GetInstanceSize() {

@@ -64,8 +64,11 @@ void init() {
 
     EZTexture *tex3 = ezLoadTexture("../res/blt.png");
     ezSetSpriteTexture(newsprite, tex3);
+
+    // add scripts
     ezSpriteAddScript(sprite, "libscript1.so");
     ezSpriteAddScript(sprite2, "libscript1.so");
+
     ezAddToScene((void *)sprite, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite3, EZ_GAMEOBJS);
