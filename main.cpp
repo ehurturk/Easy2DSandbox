@@ -37,9 +37,9 @@ void init() {
     ezAddToScene((void *)cam, EZ_CAMERA);
 
     /* Create a sprite with default shader which implements proj and model matrices by default */
-    EZSprite *sprite  = ezSquareSprite("def_sprite", 400, 300, 0, 60, 60); /* tank */
-    EZSprite *sprite2 = ezSquareSprite("tank2", 100, 200, 0, 60, 60);      /* tank */
-    EZSprite *sprite3 = ezSquareSprite("tank3", 300, 200, 0, 60, 60);      /* white square */
+    EZSprite *sprite = ezSquareSprite("def_sprite", 400, 300, 0, 60, 60); /* tank */
+    // EZSprite *sprite2 = ezSquareSprite("tank2", 100, 200, 0, 60, 60);      /* tank */
+    EZSprite *sprite3 = ezSquareSprite("tank3", 300, 200, 0, 60, 60); /* white square */
     // EZSprite *gameobj   = ezEmptySprite(EZ_EMPTY_GAMEOBJ, "gameobject", 200, 200, 0); /* create an empty gameobject with no purpose - just like html divs */
     EZSprite *newsprite = ezSquareSprite("newsprite", 250, 250, 0, 40, 40); /* bullet */
 
@@ -48,9 +48,9 @@ void init() {
                                               (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
     ezSetSpriteShader(sprite, shader);
 
-    EZShader *shader2 = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
-                                               (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
-    ezSetSpriteShader(sprite2, shader2);
+    // EZShader *shader2 = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
+    //    (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
+    // ezSetSpriteShader(sprite2, shader2);
 
     EZShader *shader3 = ezDirectShaderPipeline(2, (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
                                                (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
@@ -59,18 +59,18 @@ void init() {
     EZTexture *tex1 = ezLoadTexture("../res/tank.png");
     ezSetSpriteTexture(sprite, tex1);
 
-    EZTexture *tex2 = ezLoadTexture("../res/tank.png");
-    ezSetSpriteTexture(sprite2, tex2);
+    // EZTexture *tex2 = ezLoadTexture("../res/tank.png");
+    // ezSetSpriteTexture(sprite2, tex2);
 
     EZTexture *tex3 = ezLoadTexture("../res/blt.png");
     ezSetSpriteTexture(newsprite, tex3);
 
     // add scripts
     ezSpriteAddScript(sprite, "libscript1.so");
-    ezSpriteAddScript(sprite2, "libscript1.so");
+    // ezSpriteAddScript(sprite2, "libscript1.so");
 
     ezAddToScene((void *)sprite, EZ_GAMEOBJS);
-    ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
+    // ezAddToScene((void *)sprite2, EZ_GAMEOBJS);
     ezAddToScene((void *)sprite3, EZ_GAMEOBJS);
 
     ezStartScene();

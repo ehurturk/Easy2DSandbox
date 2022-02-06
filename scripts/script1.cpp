@@ -84,8 +84,6 @@ void OnReload(struct ball *ball, struct EZSprite *sprite) {
 }
 
 void OnUpdate(struct ball *ball) {
-    printf("eyy\n");
-    printf("Update: %s\n", ezGetSpriteName((ball)->sprite));
     pollInput((struct ball *)ball);
 }
 
