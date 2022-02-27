@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Easy2D/sprite.h"
+#include "Easy2D/window.h"
 
 #define EZ_DEBUG_ENABLED
 #include <Easy2D/easy2d.h>
@@ -30,7 +31,7 @@ void init() {
     ezBindKeyInputFunc(keyInput);
     // ezToggleVSync(1);
     app->window = ezCreateWindow("Easy2D Sandbox", 800, 800, 0);
-
+    glfwSetInputMode(ezGetNativeWindow(app->window), GLFW_STICKY_KEYS, GLFW_TRUE);
     ezCreateScene();
 
     EZCamera *cam = ezCreateCamera(EZ_ORTHOGRAPHIC);

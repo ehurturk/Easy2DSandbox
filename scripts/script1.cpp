@@ -44,6 +44,10 @@ static void pollInput(struct ball *ball) {
         ezRotateSprite(ball->sprite, -4);
     }
 
+    if (ezIsKeyDown(EZ_KEY_K)) {
+        std::cout << "shoot!" << std::endl;
+    }
+
     if (ezIsKeyDown(EZ_KEY_F))
         ezDestroySprite(ball->sprite);
 
